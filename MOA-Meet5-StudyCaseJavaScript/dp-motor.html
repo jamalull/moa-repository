@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Perhitungan Kredit Motor (Sumber Baru Rezeki)</h1>
+      <div class="form-group">
+        <label for="first">Harga Motor</label>
+        <input
+          type="number"
+          class="form-control"
+          id="motorPrice"
+          placeholder="Masukkan Harga Motor"
+        />
+      </div>
+      <div class="form-group">
+        <label for="second">Down Payment</label>
+        <input
+          type="number"
+          class="form-control"
+          id="dp"
+          placeholder="Masukkan Harga Down Payment"
+        />
+      </div>
+      <div class="form-group">
+        <label for="third">Bulan/Tenor</label>
+        <select id="tenor" class="form-control">
+          <option value="12">12 Bulan</option>
+          <option value="24">24 Bulan</option>
+          <option value="36">36 Bulan</option>
+        </select>
+      </div>
+      <input type="hidden" id="bunga" value="0.03">
+      <button type="button" class="btn btn-success" onclick="calculate()">
+        Hitung
+      </button>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover" aria-describedby="Hasil Perhitungan Kredit Motor">
+          <thead>
+            <tr>
+              <th>Bulan</th>
+              <th>Cicilan</th>
+              <th>Terbayar</th>
+              <th>Kurang</th>
+            </tr>
+          </thead>
+          <tbody id="result">
+            <!-- ini adalah output dari result  -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function calculate() {
+        const motorPrice = document.getElementById("motorPrice").value;
+        const dp = document.getElementById("dp").value;
+        const tenor = document.getElementById("tenor").value;
+        // const bunga = document.getElementById("bunga").value;
+        const result = document.getElementById("result");
+
+        let terhutang = motorPrice - dp;
+        // let besarBunga = bunga * terhutang;
+        let cicilan = (motorPrice - dp) / tenor;
+        let terbayar = 0;
+
+        result.innerHTML = "";
+
+        for (let i = 1; i <= tenor; i++) {
+          terbayar += cicilan; // terbayar = terbayar + cicilan
+          terhutang -= cicilan;
+          result.innerHTML += `
+            <tr>
+              <td>${i}</td>
+              <td>${cicilan}</td>
+              <td>${terbayar}</td>
+              <td>${terhutang}</td>
+            </tr>
+          `;
+        }
+      }
+    </script>
+  </body>
+</html>

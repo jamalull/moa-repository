@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Menentukan Gaji Karyawan</h1>
+      <div class="form-group">
+        <label for="first">Pilih Golongan Karyawan</label>
+        <select id="golongan" class="form-control">
+          <option value="gol1">Golongan 1</option>
+          <option value="gol2">Golongan 2</option>
+          <option value="gol3">Golongan 3</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="first">Apakah Sudah Berkeluarga?</label>
+        <select id="maritalStatus" class="form-control">
+          <option value="yes">Sudah Menikah</option>
+          <option value="no">Belum Menikah</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="first">Jumlah Anak</label>
+        <input
+          type="number"
+          class="form-control"
+          id="jumlahAnak"
+          placeholder="Masukkan Jumlah Anak"
+        />
+      </div>
+      <div class="form-group">
+        <label for="first">Lama Kerja (tahun)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="lamaKerja"
+          placeholder="Masukkan Lama Pekerjaan Anda"
+        />
+      </div>
+      <button type="button" class="btn btn-success" onclick="calculate()">
+        Hitung
+      </button>
+      <div class="form-group">
+        <label for="result">Total Tunjangan</label>
+        <input
+          type="text"
+          class="form-control"
+          id="tunjangan"
+          placeholder="Total Tunjangan"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label for="result">Gaji Kotor</label>
+        <input
+          type="text"
+          class="form-control"
+          id="gajiKotor"
+          placeholder="Total Gaji Kotor"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label for="result">Gaji Bersih</label>
+        <input
+          type="text"
+          class="form-control"
+          id="gajiBersih"
+          placeholder="Total Bersih"
+          readonly
+        />
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function calculate() {
+        const golongan = document.getElementById("golongan").value;
+        const maritalStatus = document.getElementById("maritalStatus").value;
+        const jumlahAnak = document.getElementById("jumlahAnak").value;
+        const lamaKerja = document.getElementById("lamaKerja").value;
+        const tunjangan = document.getElementById("tunjangan");
+        const gajiKotor = document.getElementById("gajiKotor");
+        const gajiBersih = document.getElementById("gajiBersih");
+        let gajiPokok = 0;
+        let pajak = 0;
+        let tunjanganKeluarga = 0;
+        // let tunjanganAnak = 0;
+
+        switch (golongan) {
+          case "gol1":
+            gajiPokok = 1000000;
+            pajak = 0;
+            break;
+          case "gol2":
+            gajiPokok = 2000000;
+            pajak = 0.025;
+            break;
+          case "gol3":
+            gajiPokok = 3000000;
+            pajak = 0.05;
+            break;
+          default:
+            gajiPokok = 0;
+            pajak = 0;
+            break;
+        }
+        
+        if (maritalStatus == "yes") {
+          tunjanganKeluarga = 200000;
+        } else {
+          tunjanganKeluarga = 0;
+        }
+        const tunjanganAnak =
+          jumlahAnak <= 3 ? jumlahAnak * 100000 : 3 * 100000;
+        const tunjanganProfesi = getTunjanganProfesi(lamaKerja);
+        const totalTunjangan = tunjanganKeluarga + tunjanganAnak + tunjanganProfesi;
+        const bruteSalary = gajiPokok + totalTunjangan;
+        const netSalary = bruteSalary - (bruteSalary * pajak);
+
+        tunjangan.value = totalTunjangan;
+        gajiKotor.value = bruteSalary;
+        gajiBersih.value = netSalary;
+      }
+
+      function getTunjanganProfesi(lamaKerja) {
+        if (lamaKerja < 2) {
+          return 0;
+        } else {
+          return Math.floor(lamaKerja / 2) * 50000;
+        }
+      }
+    </script>
+  </body>
+</html>

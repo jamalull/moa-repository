@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container d-flex flex-column gap-4">
+      <h1>Menentukan Tipe Segitiga Berdasarkan Panjang Sisi</h1>
+      <div class="form-group">
+        <label for="first">Sisi Pertama (Terpanjang)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="first"
+          placeholder="Masukkan Sisi Pertama"
+        />
+      </div>
+      <div class="form-group">
+        <label for="second">Sisi Kedua</label>
+        <input
+          type="number"
+          class="form-control"
+          id="second"
+          placeholder="Masukkan Sisi Kedua"
+        />
+      </div>
+      <div class="form-group">
+        <label for="third">Sisi Ketiga (Terpendek)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="third"
+          placeholder="Masukkan Sisi Ketiga"
+        />
+      </div>
+      <button type="button" class="btn btn-success" onclick="calculate()">
+        Hitung
+      </button>
+      <div class="form-group">
+        <label for="result">Hasil</label>
+        <input
+          type="text"
+          class="form-control"
+          id="result"
+          placeholder="Hasil"
+          readonly
+        />
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function calculate() {
+        const first = document.getElementById("first").value;
+        const second = document.getElementById("second").value;
+        const third = document.getElementById("third").value;
+        const result = document.getElementById("result");
+        result.value = getTypeSegitiga(first, second, third);
+
+        clearInput();
+      }
+
+      function clearInput(){
+        first.value = "";
+        second.value = "";
+        third.value = "";
+      }
+      
+      function getTypeSegitiga(first, second, third) {
+
+        if (Math.pow(first,2) < (Math.pow(second,2) + Math.pow(third,2))) {
+          return "Segitiga Lancip";
+        } else if ( Math.pow(first,2) > (Math.pow(second,2) + Math.pow(third,2))) {
+          return "Segitiga Tumpul";
+        } else if (Math.pow(first,2) == (Math.pow(second,2) + Math.pow(third,2))) {
+          return "Segitiga Siku-Siku";
+        } else {
+          return "Bukan Segitiga";
+        }
+      }
+      </script>
+      <!-- Source Formula : https://mafia.mafiaol.com/2014/04/menentukan-jenis-segitiga-dengan-theorema-phytagoras.html -->
+  </body>
+</html>
