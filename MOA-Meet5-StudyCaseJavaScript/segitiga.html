@@ -16,10 +16,10 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="container d-flex flex-column gap-4">
+    <div class="container">
       <h1>Menentukan Tipe Segitiga Berdasarkan Panjang Sisi</h1>
       <div class="form-group">
-        <label for="first">Sisi Pertama (Terpanjang)</label>
+        <label for="first">Sisi Pertama</label>
         <input
           type="number"
           class="form-control"
@@ -37,7 +37,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="third">Sisi Ketiga (Terpendek)</label>
+        <label for="third">Sisi Ketiga</label>
         <input
           type="number"
           class="form-control"
@@ -71,29 +71,17 @@
         const third = document.getElementById("third").value;
         const result = document.getElementById("result");
         result.value = getTypeSegitiga(first, second, third);
-
-        clearInput();
       }
 
-      function clearInput(){
-        first.value = "";
-        second.value = "";
-        third.value = "";
-      }
-      
       function getTypeSegitiga(first, second, third) {
-
-        if (Math.pow(first,2) < (Math.pow(second,2) + Math.pow(third,2))) {
-          return "Segitiga Lancip";
-        } else if ( Math.pow(first,2) > (Math.pow(second,2) + Math.pow(third,2))) {
-          return "Segitiga Tumpul";
-        } else if (Math.pow(first,2) == (Math.pow(second,2) + Math.pow(third,2))) {
-          return "Segitiga Siku-Siku";
+        if (first == second && second == third) {
+          return "Segitiga Sama Sisi";
+        } else if (first == second || second == third || first == third) {
+          return "Segitiga Sama Kaki";
         } else {
-          return "Bukan Segitiga";
+          return "Segitiga Sembarang";
         }
       }
-      </script>
-      <!-- Source Formula : https://mafia.mafiaol.com/2014/04/menentukan-jenis-segitiga-dengan-theorema-phytagoras.html -->
+    </script>
   </body>
 </html>
