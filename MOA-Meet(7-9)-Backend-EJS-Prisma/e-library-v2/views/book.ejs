@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <base href="/">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Jul 27 2023 with Bootstrap v5.3.1
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <%- include('header') %>
+
+  <%- include('sidebar') %>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Book Pages</h5>
+              <p>This is an book page lists from Author of <b><%= author.name %></b></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              
+              <span class="d-flex align-items-center">
+                <h5 class="card-title me-auto">Book List</h5>
+                <a href="/books/create/<%= author.id %>" class="btn btn-primary h-25"><i class="fa-solid fa-plus fa-fade me-2"></i>Create Data Book</a>
+              </span>
+
+              <p>All books available will be display in the table and only Admin can running command 
+                <a href="#" target="_blank">Create, Read, Update, and Delete</a> for the data of <code>Author and Book</code></p>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Publisher</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <% if(books.length === 0) { %>
+                  <tr>
+                    <td colspan="6" class="text-center">No data</td>
+                  </tr>
+                  <% } else {%> <% books.forEach((book, key) => { %>
+                  <tr>
+                    <th scope="row"><%= book.id %></th>
+                    <td><%= book.name %></td>
+                    <td class="text-truncate" style="max-width: 200px;"><%= book.description %></td>
+                    <td><%= book.price %></td>
+                    <td><%= book.publisher %></td>
+                    <td>
+                      <a
+                        href="/books/book/<%= book.id %>"
+                        class="btn btn-info"
+                        ><i class="fa-solid fa-list-ul me-2"></i>Detail Book</a
+                      >
+                      <a
+                        href="/books/edit/<%= author.id %>/<%= book.id %>"
+                        class="btn btn-warning"
+                        ><i class="fa-solid fa-wrench me-2"></i>Edit</a
+                      >
+                      <!-- <a
+                        href="/authors/delete/<%= author.id %>"
+                        class="btn btn-danger"
+                        ><i class="fa fa-trash me-2"></i>Delete</a
+                      > -->
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<%= book.id %>">
+                        <i class="fa fa-trash me-2"></i>Delete
+                      </button>
+                    </td>
+                  </tr>
+                  
+                  <!-- Modal Delete -->
+                  <div class="modal fade" id="deleteModal-<%= book.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabelLogout">Confirmation Action !</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure want to delete Book of <b><%= book.name %></b> from Author <b><%= author.name %></b> ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                          <a href="/books/delete/<%= author.id %>/<%= book.id %>" class="btn btn-danger">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }) } %>
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <%- include('footer') %>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

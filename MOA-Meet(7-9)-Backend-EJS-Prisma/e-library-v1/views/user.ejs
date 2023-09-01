@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="/">
+    
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+      />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="assets/css/styles.css" />
+      
+      <title>E-Library</title>
+  </head>
+  <body>
+    <%- include('navbar') %>
+    <main>
+      <div class="container card mt-5">
+        <div class="card-body">
+          <span class="d-flex">
+            <h5 class="card-title me-auto">Halaman User</h5>
+            <a href="/users/create" class="btn btn-primary"><i class="fa-solid fa-plus fa-fade me-2"></i>Create Author Book</a>
+          </span>
+          
+          <div class="table-responsive mt-2">
+            <table class="table table-secondary table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(users.length === 0) { %>
+                <tr>
+                  <td colspan="4" class="text-center">No data</td>
+                </tr>
+                <% } else {%> <% users.forEach((user, key) => { %>
+                <tr>
+                  <td><%= user.id %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.username %></td>
+                  <td>
+                    <a
+                      href="/books/<%= user.id %>"
+                      class="btn btn-info"
+                      ><i class="fa-solid fa-list-ul me-2"></i>Book Lists</a
+                    >
+                    <a
+                      href="/users/edit/<%= user.id %>"
+                      class="btn btn-warning"
+                      ><i class="fa-solid fa-wrench me-2"></i>Edit</a
+                    >
+                    <!-- <a
+                      href="/users/delete/<%= user.id %>"
+                      class="btn btn-danger"
+                      ><i class="fa fa-trash me-2"></i>Delete</a
+                    > -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-<%= user.id %>">
+                      <i class="fa fa-trash me-2"></i>Delete
+                    </button>
+                  </td>
+                </tr>
+                
+                <!-- Modal Delete -->
+                <div class="modal fade" id="deleteModal-<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelLogout">Confirmation Action !</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure want to delete user of <%= user.name %> ?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                        <a href="/users/delete/<%= user.id %>" class="btn btn-danger">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% }) } %>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </main>
+    
+    <%- include('footer') %>
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

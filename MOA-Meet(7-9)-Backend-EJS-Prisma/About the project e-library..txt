@@ -1,0 +1,23 @@
+Difference beetwen (Backend Project) e-library-v1 and e-library-v2 :
+
+1) e-library-v1 
+
+- No Auth.
+- DB : Mysql.
+- Prisma ORM.
+- EJS, and JavaScript Languages.
+
+
+2) e-library-v2
+
+- Authentication using Passport.
+- Use Bootstrap Template Admin for Aestetics UI Apps.
+- Fully feature and functionality of web apps.
+- DB : Mysql.
+- Prisma ORM.
+- EJS, and JavaScript Languages.
+
+
+
+
+
